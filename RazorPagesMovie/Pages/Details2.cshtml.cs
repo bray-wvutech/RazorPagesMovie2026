@@ -8,11 +8,11 @@ namespace RazorPagesMovie.Pages
     [Authorize]
     public class Details2Model : PageModel
     {
-        private readonly MovieRepoEf _repo;
+        private readonly IMovieRepo _repo;
 
-        public Details2Model(RazorPagesMovieContext context)
+        public Details2Model(IMovieRepo repo)
         {
-            _repo = new MovieRepoEf(context);
+            _repo = repo;
         }
 
         public Models.Movie MovieObject { get; set; } = default!;

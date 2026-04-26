@@ -20,7 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 
 // *** HERE ARE OUR NEW LINES ***
-builder.Services.AddScoped<IMovieRepo, MovieRepoEf>();
+builder.Services.AddScoped<IMovieRepo, MovieRepoEf>();          // repo = new MoveRepoEf(context)
 //builder.Services.AddSingleton<IMovieRepo, MovieRepoList>();
 
 
@@ -44,6 +44,18 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+
+// Add API endpoint to get movie by ID
+app.MapGet("/api/movies/{id:int}", async (int id, IMovieRepo repo) =>
+{
+    var movie = await repo.GetByIdAsync(id);
+    if (movie == null)
+    {
+        return Results.NotFound(new { error = "Movie not found" });
+    }
+    return Results.Ok(movie);
+});
 
 
 

@@ -6,13 +6,13 @@ namespace RazorPagesMovie.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly MovieRepoList _repo;
+    private readonly IMovieRepo _repo;
 
     public IEnumerable<RazorPagesMovie.Models.Movie> Movies { get; set; } = default!;
 
-    public IndexModel(RazorPagesMovieContext context)
+    public IndexModel(IMovieRepo repo)
     {
-        _repo = new MovieRepoList();
+        _repo = repo;
     }
 
     //public void OnGet()
